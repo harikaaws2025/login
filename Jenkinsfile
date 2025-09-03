@@ -36,7 +36,8 @@ pipeline {
             steps {
                 sh """
                     docker rm -f gmail_container || true
-                    docker run -d --name gmail_container -p 8080:8080 ${IMAGE_NAME}:${IMAGE_TAG}
+                   docker run -itd --name gmail_container -p 8090:8080 gmail-clone:v1
+
                 """
             }
         }
