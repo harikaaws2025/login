@@ -35,14 +35,11 @@ pipeline {
 
         stage('Run Docker Container') {
             steps {
-               sh '''
-    if lsof -i :8080; then
-        echo "Port 8080 is busy. Killing conflicting container..."
-        docker ps --filter "publish=8080" -q | xargs -r docker rm -f
-    fi
-    docker run -d --name gmail_container -p 8080:8080 gmail-clone:v1
-'''
-
+               sh """
+                   docker stop gmail_container || true
+                    docker rm -f gmail_container || true
+                    docker run -d --name gmail_container -p 8080:8080 ${IMAGE_NAME}:${IMAGE_TAG}
+                """
             }
         }
 
