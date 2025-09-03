@@ -25,6 +25,7 @@ pipeline {
             steps {
                 script {
                     sh """
+                        docker stop ${IMAGE_NAME}:${IMAGE_TAG} || true
                         docker rmi -f ${IMAGE_NAME}:${IMAGE_TAG} || true
                         docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
                     """
